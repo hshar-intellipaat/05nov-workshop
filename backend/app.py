@@ -4,10 +4,21 @@ from flask import Flask, jsonify, request
 from supabase import create_client, Client
 from postgrest import APIError
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 load_dotenv()
 
 app = Flask(__name__)
+
+
+app = Flask(__name__)
+
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "*"}},
+    allow_headers="*",
+    methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+)
 
 missing_settings = [name for name in ('SUPABASE_URL', 'SUPABASE_KEY')
                     if not os.environ.get(name)]
